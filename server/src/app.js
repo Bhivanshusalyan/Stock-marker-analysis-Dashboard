@@ -1,0 +1,27 @@
+import express from 'express';
+import cors from 'cors';
+import { env } from './config/env.js';
+import authRoutes from './routes/auth.js';
+import stocksRoutes from './routes/stocks.js';
+import marketRoutes from './routes/market.js';
+import watchlistRoutes from './routes/watchlist.js';
+import portfolioRoutes from './routes/portfolio.js';
+import newsRoutes from './routes/news.js';
+import alertsRoutes from './routes/alerts.js';
+import { errorHandler, notFound } from './middleware/error.js';
+
+const app = express();
+app.disable('x-powered-by');
+app.use(cors({ origin: env.clientOrigin, credentials: false }));
+app.use(express.json({ limit: '100kb' }));
+app.get('/api/health', (_req, res) => res.json({ ok: true, service: 'stockpulse-api', timestamp: new Date().toISOString() }));
+app.use('/api/auth', authRoutes);
+app.use('/api/stocks', stocksRoutes);
+app.use('/api/market', marketRoutes);
+app.use('/api/watchlist', watchlistRoutes);
+app.use('/api/portfolio', portfolioRoutes);
+app.use('/api/news', newsRoutes);
+app.use('/api/alerts', alertsRoutes);
+app.use(notFound);
+app.use(errorHandler);
+export default app;

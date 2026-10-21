@@ -1,0 +1,2 @@
+.portfolio-chart { display: flex; align-items: center; justify-content: flex-end; }
+.portfolio-empty-chart { max-width: 120px; color: #63728b; font-size: 10px; line-height: 1.45; text-align: right; }
